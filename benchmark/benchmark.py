@@ -60,73 +60,45 @@ def parse_file():
 
     return instructions, dimensionsA, dimensionsB, dimensionsC
 
-def create_random_aligned_tensor(dimensions, dtype=np.float64, alignment=64):
-    """
-    Creates a single aligned NumPy tensor filled with random values.
-
-    Parameters:
-    - dimensions (tuple): Shape of the tensor (e.g., (20, 30, 20)).
-    - dtype (data-type): Data type of the tensor, default is np.float64.
-    - alignment (int): Byte alignment, default is 64 bytes.
-
-    Returns:
-    - tensor (np.ndarray): A 64-byte aligned NumPy tensor filled with random values.
-    """
-    # Calculate the total number of bytes needed for the tensor
-    itemsize = np.dtype(dtype).itemsize  # Size of one item in bytes
-    nbytes = np.prod(dimensions) * itemsize
-
-    # Ensure there is enough space for alignment
-    buffer_size = nbytes + alignment - (nbytes % alignment)
-
-    # Create a raw buffer and align it
-    buffer = np.empty(buffer_size, dtype=np.uint8)
-    offset = -buffer.ctypes.data % alignment
-
-    # Create the aligned tensor
-    tensor = np.ndarray(
-        shape=dimensions,
-        dtype=dtype,
-        buffer=buffer[offset:offset + nbytes],
-        order='C'
-    )
-
-    # Fill the tensor with random values
-    tensor[...] = np.random.rand(*dimensions)
-
-    return tensor
-
 
 def benchmark_einsum(fcts):
     np.random.seed(0)
     np.set_printoptions(precision=4, suppress=True)
-    MAX_INSTR = 96
+    MAX_INSTR = 6
+    REPETITIONS = 10
     instructions, dimsA, dimsB, dimsC = parse_file()
     times = np.zeros((MAX_INSTR+1, len(fcts)))
-    for i, instruction in enumerate(instructions):
-        if i == MAX_INSTR:
-            break
-        results = [None]*len(fcts)
-        A = np.random.rand(*dimsA[i])
-        B = np.random.rand(*dimsB[i])
-        print(i)
-        for j, fct in enumerate(fcts):
-            if fct == torch.einsum:
-                A_tilda = torch.from_numpy(A)
-                B_tilda = torch.from_numpy(B)
-                t0 = time.time()
-                results[j] = fct(instruction, A_tilda, B_tilda)
-                t1 = time.time()
-            else:
-                t0 = time.time()
-                results[j] = fct(instruction, A, B)
-                t1 = time.time()
+    for r in range(REPETITIONS):
+        print("Current repetition: ", r)
+        for i, instruction in enumerate(instructions):
+            if i == MAX_INSTR:
+                break
+            results = [None]*len(fcts)
+            A = np.random.rand(*dimsA[i])
+            B = np.random.rand(*dimsB[i])
+            for j, fct in enumerate(fcts):
+                if fct == torch.einsum:
+                    A_tilda = torch.from_numpy(A)
+                    B_tilda = torch.from_numpy(B)
+                    t0 = time.time()
+                    results[j] = fct(instruction, A_tilda, B_tilda)
+                    t1 = time.time()
+                else:
+                    t0 = time.time()
+                    results[j] = fct(instruction, A, B)
+                    t1 = time.time()
 
-            times[i,j] = t1 - t0
+                times[i,j] += t1 - t0
+                print(times)
+            for i in range(len(fcts)-1):
+                assert np.allclose(results[i], results[i+1])
+                print("fct ", i, "and ", i+1, "passed")
+        print("-"*20)
+    times = times / REPETITIONS
     times[-1] = np.sum(times, axis=0)
+    print("final times: ")
     print(times)
     np.save(os.path.join(os.path.dirname(__file__), "benchmark"), times)
-
 
 
 def profile_einsum(fcts):

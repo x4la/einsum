@@ -190,7 +190,7 @@ def fast_einsum(subscripts, a, b=None):
         t3 = time.time()
         c = single_einsum(str_res, c)
         t4 = time.time()
-        # return c
+        return c
         return c, [0, t1-t0, t2-t1, t3-t2, t4-t3, 0]
 
 
@@ -203,7 +203,7 @@ def parse(s, shape_a, shape_b):
 
     char_to_dim_a = {char: shape_a[str_a.index(char)] for char in str_a}
     char_to_dim_b = {char: shape_b[str_b.index(char)] for char in str_b}
-    char_to_dim = char_to_dim_a | char_to_dim_b
+    char_to_dim = {**char_to_dim_a, **char_to_dim_b}
 
     left_idxs = "".join([char for char in str_a if (char in str_c_in and char not in str_b)])
     right_idxs = "".join([char for char in str_b if (char in str_c_in and char not in str_a)])

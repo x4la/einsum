@@ -190,7 +190,7 @@ def fast_einsum(subscripts, a, b=None):
         t3 = time.time()
         c = single_einsum(str_res, c)
         t4 = time.time()
-        # return c
+        return c
         return c, [0, t1-t0, t2-t1, t3-t2, t4-t3, 0]
 
 

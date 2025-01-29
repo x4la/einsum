@@ -1,5 +1,5 @@
-abc-dca-bd a:384;c:376;b:24;d:384; 36.55 41.97 38.10 25.21 # order flipped! # new case: abij-abjk-baik a:20;b:20;i:2000;j:30;k:300;
 abc-bda-dc a:384;c:24;b:384;d:384; 27.76 - 22.42 8.22
+abc-dca-bd a:384;c:376;b:24;d:384; 36.55 41.97 38.10 25.21 # new case: abij-abjk-baik a:20;b:20;i:2000;j:30;k:300;
 abcd-dbea-ec a:96;c:24;b:84;e:96;d:96; 21.26 - 18.71 5.16
 abcd-deca-be a:96;c:84;b:24;e:84;d:96; 30.52 - 18.36 4.41
 abcd-ebad-ce a:96;c:24;b:84;e:96;d:84; 39.43 24.87 31.25 11.85
@@ -94,15 +94,3 @@ abcdef-gebc-dfga a:24;c:16;b:16;e:16;d:24;g:24;f:16; 18.25 - 11.34 1.42
 abcdef-gfab-degc a:24;c:16;b:16;e:16;d:24;g:24;f:16; 24.62 16.94 11.80 1.21
 abcdef-gfac-degb a:24;c:16;b:16;e:16;d:24;g:24;f:16; 20.69 8.93 11.30 1.21
 abcdef-gfbc-dega a:24;c:16;b:16;e:16;d:24;g:24;f:16; 18.19 - 11.35 1.44
-abc-bda-dc a:3;c:2;b:3;d:3; 27.76 - 22.42 8.22  # small dim tests
-abc-dca-bd a:3;c:2;b:1;d:2; 36.55 41.97 38.10 25.21
-abcd-dbea-ec a:9;c:4;b:3;e:96;d:96; 21.26 - 18.71 5.16
-abcd-deca-be a:6;c:2;b:2;e:1;d:2; 30.52 - 18.36 4.41
-abcd-ebad-ce a:2;c:1;b:4;e:2;d:1; 39.43 24.87 31.25 11.85
-abcde-efbad-cf a:2;c:2;b:3;e:2;d:36;f:36; 20.51 - 14.85 1.75
-abcde-ecbfa-fd a:4;c:3;b:1;e:2;d:2;f:2; 19.99 - 15.77 2.22
-abcde-efcad-bf a:1;c:2;b:3;e:4;d:2;f:1; 21.76 - 13.82 1.75
-abcd-ea-ebcd a:2;c:3;b:1;e:4;d:2; 56.58 46.30 46.31 47.40 # no reordering within fused dims
-abcd-eb-aecd a:1;c:2;b:2;e:1;d:4; 58.26 45.05 35.43 13.00
-abcd-ec-abed a:2;c:1;b:1;e:2;d:1; 57.46 49.45 35.36 15.46
-ab-ac-cb a:3;c:3;b:3; 65.89 75.80 75.80 74.45 # original: a:7248;c:7248;b:7240 #after this starts the orig

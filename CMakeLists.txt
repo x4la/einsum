@@ -14,7 +14,5 @@ add_library(bmm_v5 SHARED trash_bmm_v5.cpp kernel.cpp)
 add_library(bmm_v6 SHARED bmm_v6.cpp kernel.cpp)
 add_library(bmm_v7 SHARED bmm_v7.cpp kernel.cpp)
 add_library(bmm_v8 SHARED bmm_v8.cpp kernel.cpp)
-#add_library(mm_col_maj SHARED mm_col_maj.cpp kernel_col_maj.cpp)
-#add_library(mm_row_maj SHARED mm_row_maj.cpp kernel_col_maj.cpp)
 
 
