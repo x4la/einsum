@@ -1,4 +1,4 @@
-# fast_einsum — Development Version
+# einsum (development version)
 
 This repository contains the development work for a lightweight, high-performance `einsum` implementation based on a **Transpose–Transpose–BMM–Transpose** strategy. It includes all experimental versions (`v1`–`v8`) of the C++ BMM kernels and the Python interface, as well as the benchmarking and test scripts used during optimization.
 
